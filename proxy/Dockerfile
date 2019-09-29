@@ -5,5 +5,5 @@ ADD ./nginx.conf /etc/nginx/
 
 #VOLUME /etc/nginx
 
-EXPOSE 8080
+
 EXPOSE 80
