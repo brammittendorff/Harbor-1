@@ -55,3 +55,5 @@ ADD ./app.conf  /etc/core
 #VOLUME /etc/core/token/
 #VOLUME /data/
 #VOLUME /etc/core/certificates
+
+EXPOSE 8080
