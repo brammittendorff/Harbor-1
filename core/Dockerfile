@@ -51,7 +51,7 @@ ENV NO_PROXY=127.0.0.1,localhost,.local,.internal,log,db,redis,nginx,core,portal
 ADD ./app.conf  /etc/core
 
 
-VOLUME /etc/core/ca/
-VOLUME /etc/core/token/
-VOLUME /data/
-VOLUME /etc/core/certificates
+#VOLUME /etc/core/ca/
+#VOLUME /etc/core/token/
+#VOLUME /data/
+#VOLUME /etc/core/certificates
