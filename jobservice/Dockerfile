@@ -12,3 +12,5 @@ ENV NO_PROXY=127.0.0.1,localhost,.local,.internal,log,db,redis,nginx,core,portal
 
 
 VOLUME /var/log/jobs
+
+EXPOSE 8083
