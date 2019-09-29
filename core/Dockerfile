@@ -49,4 +49,4 @@ ENV HTTPS_PROXY=
 ENV NO_PROXY=127.0.0.1,localhost,.local,.internal,log,db,redis,nginx,core,portal,postgresql,jobservice,registry,registryctl,clair
 
 ADD ./app.conf  /etc/core
-ADD ./certificates   /etc/core
+ADD ./certificates   /etc/core/
