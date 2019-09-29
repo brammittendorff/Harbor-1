@@ -1,3 +1,4 @@
 FROM goharbor/harbor-portal:v1.9.0
 
-EXPOSE 8080
+ADD ./nginx.conf /etc/nginx/
+EXPOSE 8081
