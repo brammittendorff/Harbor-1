@@ -4,3 +4,5 @@ ADD ./config.yml /etc/registry/
 ADD ./ /etc/registry/root.crt
 VOLUME /storage
 VOLUME /etc/registry
+
+EXPOSE 5000

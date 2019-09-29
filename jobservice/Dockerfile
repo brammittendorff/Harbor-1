@@ -9,3 +9,6 @@ ENV JOBSERVICE_WEBHOOK_JOB_MAX_RETRY=10
 ENV HTTP_PROXY=
 ENV HTTPS_PROXY=
 ENV NO_PROXY=127.0.0.1,localhost,.local,.internal,log,db,redis,nginx,core,portal,postgresql,jobservice,registry,registryctl,clair
+
+
+VOLUME /var/log/jobs

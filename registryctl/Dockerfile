@@ -4,3 +4,6 @@ ADD ./config.yml  /etc/registryctl/
 
 ENV CORE_SECRET=PvGTaXZ0dI4U5efj
 ENV JOBSERVICE_SECRET=dZMbXPrQC72qvzOA
+
+VOLUME /storage
+VOLUME /etc/registry/
