@@ -1,59 +1,16 @@
-FROM goharbor/harbor-core:v1.9.0
+FROM photon:2.0
 
-ENV CONFIG_PATH=/etc/core/app.conf
-ENV UAA_CA_ROOT=/etc/core/certificates/uaa_ca.pem
-ENV _REDIS_URL=redis:6379,100,
-ENV SYNC_REGISTRY=false
-ENV CHART_CACHE_DRIVER=redis
-ENV _REDIS_URL_REG=redis://redis:6379/1
-ENV PORT=8080
-ENV LOG_LEVEL=info
-ENV EXT_ENDPOINT=http://www.insteate.cn
-ENV DATABASE_TYPE=postgresql
-ENV POSTGRESQL_HOST=postgresql
-ENV POSTGRESQL_PORT=5432
-ENV POSTGRESQL_USERNAME=postgres
-ENV POSTGRESQL_PASSWORD=root123
-ENV POSTGRESQL_DATABASE=registry
-ENV POSTGRESQL_SSLMODE=disable
-ENV POSTGRESQL_MAX_IDLE_CONNS=50
-ENV POSTGRESQL_MAX_OPEN_CONNS=100
-ENV REGISTRY_URL=http://registry:5000
-ENV TOKEN_SERVICE_URL=http://core:8080/service/token
-ENV HARBOR_ADMIN_PASSWORD=Harbor12345
-ENV MAX_JOB_WORKERS=10
-ENV CORE_SECRET=PvGTaXZ0dI4U5efj
-ENV JOBSERVICE_SECRET=dZMbXPrQC72qvzOA
-ENV ADMIRAL_URL=
-ENV WITH_NOTARY=False
-ENV WITH_CLAIR=False
-ENV CLAIR_DB_PASSWORD=
-ENV CLAIR_DB_HOST=
-ENV CLAIR_DB_PORT=
-ENV CLAIR_DB_USERNAME=
-ENV CLAIR_DB=
-ENV CLAIR_DB_SSLMODE=
-ENV CORE_URL=http://core:8080
-ENV CORE_LOCAL_URL=http://127.0.0.1:8080
-ENV JOBSERVICE_URL=http://jobservice:8080
-ENV CLAIR_URL=http://clair:6060
-ENV NOTARY_URL=http://notary-server:4443
-ENV REGISTRY_STORAGE_PROVIDER_NAME=filesystem
-ENV READ_ONLY=false
-ENV RELOAD_KEY=
-ENV CHART_REPOSITORY_URL=http://chartmuseum:9999
-ENV REGISTRY_CONTROLLER_URL=http://registryctl:8080
-ENV WITH_CHARTMUSEUM=False
-ENV HTTP_PROXY=
-ENV HTTPS_PROXY=
-ENV NO_PROXY=127.0.0.1,localhost,.local,.internal,log,db,redis,nginx,core,portal,postgresql,jobservice,registry,registryctl,clair
+RUN tdnf install sudo tzdata -y >> /dev/null \
+    && tdnf clean all \
+    && groupadd -r -g 10000 harbor && useradd --no-log-init -r -g 10000 -u 10000 harbor \
+    && mkdir /harbor/
 
-ADD ./app.conf  /etc/core
+HEALTHCHECK CMD curl --fail -s http://127.0.0.1:8080/api/ping || exit 1
+COPY ./make/photon/core/harbor_core ./UIVERSION /harbor/
+COPY ./src/core/views /harbor/views
+COPY ./make/migrations /harbor/migrations
 
-
-#VOLUME /etc/core/ca/
-#VOLUME /etc/core/token/
-#VOLUME /data/
-#VOLUME /etc/core/certificates
-
-EXPOSE 8080
+RUN chmod u+x /harbor/harbor_core
+WORKDIR /harbor/
+USER harbor
+ENTRYPOINT ["/harbor/harbor_core"]
