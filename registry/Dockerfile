@@ -3,3 +3,5 @@ COPY	./registry/* /etc/registry/
 COPY	./root.crt /etc/registry/root.crt
 RUN	chown 10000:10000 -R /etc/registry
 VOLUME	/storage
+
+EXPOSE 5000
